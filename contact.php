@@ -38,9 +38,9 @@ class Contact {
 
     //create new contact
     public function createContact() {
-        $this->name = htmlspecialchars(strip_tags($this->name)); // sanitize name
-        $this->phone = htmlspecialchars(strip_tags($this->phone)); // sanitize phone
-        $this->latitude = htmlspecialchars(strip_tags($this->latitude)); // sanitize latitude
+        $this->name      = htmlspecialchars(strip_tags($this->name)); // sanitize name
+        $this->phone     = htmlspecialchars(strip_tags($this->phone)); // sanitize phone
+        $this->latitude  = htmlspecialchars(strip_tags($this->latitude)); // sanitize latitude
         $this->longitude = htmlspecialchars(strip_tags($this->longitude)); // sanitize longitude
         $signa = $this->convertToBase64(); // convertToBase64
 
@@ -53,17 +53,34 @@ class Contact {
 
     //update single contact
     public function updateContact(){
-
+        $this->id        = htmlspecialchars(strip_tags($this->id)); // sanitize id
+        $this->name      = htmlspecialchars(strip_tags($this->name)); // sanitize name
+        $this->phone     = htmlspecialchars(strip_tags($this->phone)); // sanitize phone
+        $this->latitude  = htmlspecialchars(strip_tags($this->latitude)); // sanitize latitude
+        $this->longitude = htmlspecialchars(strip_tags($this->longitude)); // sanitize longitude
+        if($this->signature != NULL){ // if signature is exist and not null
+            return $this->updateSignature(); // update signature
+        } else { // if the signature does not exist and is null
+            $sql = "UPDATE " . $this->tableContact . " SET name = '" . $this->name . "', phone = '" . $this->phone . 
+            "', latitude = '" . $this->latitude . "', longitude = '" . $this->longitude . "' WHERE id = '" . $this->id . "'"; // query update
+            return $this->connection->query($sql); // return if the statement succeeds true or if it doesn't succeed false
+        }
     }
 
     //remove single contact
     public function deleteContact(){
-
+        $this->id = htmlspecialchars(strip_tags($this->id)); // sanitize id
+        $sql = "DELETE FROM " . $this->tableContact . " WHERE id = '" . $this->id . "'"; // query for delete single contact
+        return $this->connection->query($sql) ? true : false; // return if the statement succeeds
     }
 
     //update signature for single contact
     public function updateSignature(){ 
-
+        $sql = "UPDATE " . $this->tableContact . " SET name = '" . $this->name . "', phone = '" . $this->phone . 
+        "', signature = '" . $this->signature . "', latitude = '" . $this->latitude . "', longitude = '" . $this->longitude . 
+        "' WHERE id = '" . $this->id . "'"; // query update
+        $this->connection->query($sql); // update contact information
+        return $this->connection->affected_rows > 0 ? true : false; // return false if contact information is not updated
     }
 
     //convertToBase64 signature
