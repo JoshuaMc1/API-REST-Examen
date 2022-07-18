@@ -46,7 +46,7 @@ try {
             } else { 
                 $database->closeConnection(); // close connection
                 $responce = array([
-                    'Error code:' => '404',
+                    'Code:' => '404',
                     'Message: ' => 'There are one or more required fields that are empty.'
                 ]); // response error
                 http_response_code(404); // server response
@@ -55,7 +55,7 @@ try {
         } else {
             $database->closeConnection(); // close connection
             $responce = array([
-                'Error code:' => '404',
+                'Code:' => '404',
                 'Message: ' => 'An error has occurred, the mandatory fields are required.'
             ]); // response error 
             http_response_code(404); // server response
@@ -64,8 +64,8 @@ try {
     } else {
         $connection->close(); // close connection
         $response = array([
-            "errorCode" => "404",
-            "errorMessage" => "Invalid request method."
+            "Code" => "404",
+            "Message" => "Invalid request method."
         ]); // response error
         echo json_encode($response, JSON_UNESCAPED_UNICODE); // response error in format JSON
         http_response_code(404); // server response

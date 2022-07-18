@@ -34,8 +34,8 @@ try {
     } else {
         $connection->close(); // close connection
         $response = array([
-            "errorCode" => "204",
-            "errorMessage" => "No query content"
+            "Code" => "204",
+            "Message" => "No query content"
         ]); // response error
         echo json_encode($response, JSON_UNESCAPED_UNICODE); // response error in format JSON
     }
